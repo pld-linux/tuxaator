@@ -1,0 +1,11 @@
+--- ./tuxaator	2005-07-18 21:17:25.000000000 +0300
++++ /tmp/tuxaator	2005-07-18 22:05:19.000000000 +0300
+@@ -19,7 +19,7 @@
+ my $Kernel;
+ my $Log;
+ my $Plugin;
+-my $basedir = $ENV{'PWD'};
++my $basedir = $ENV{'BASEDIR'} || '/usr/share/tuxaator';
+ 
+ 
+ my $lk		= 0;
