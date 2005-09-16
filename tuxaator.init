@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# tuxaator	IRC bot/dictionary.
+#
+# chkconfig:	345 80 20
+#
+# description:	A lightweight IRC bot/dictionary.
+#
+# $Id$
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config
+[ -f /etc/sysconfig/tuxaator ] && . /etc/sysconfig/tuxaator
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		msg_network_down tuxaator
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/tuxaator ]; then
+		msg_starting tuxaator
+		daemon --user tuxaator --fork "tuxaator 2>/var/log/tuxaator.log"
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/tuxaator
+	else
+		msg_already_running tuxaator
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/tuxaator ]; then
+		# Stop daemons.
+		msg_stopping tuxaator
+		killproc tuxaator
+		rm -f /var/lock/subsys/tuxaator
+	else
+		msg_not_running tuxaator
+	fi
+	;;
+  restart|reload)
+	$0 stop
+	$0 start
+	exit $?
+	;;
+  force-reload)
+	$0 restart
+	exit $?
+	;;
+  status)
+	status tuxaator
+	RETVAL=$?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
+
+# This must be last line !
+# vi:syntax=sh:tw=78:ts=4:sw=4
