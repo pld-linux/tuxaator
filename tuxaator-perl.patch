@@ -1,0 +1,11 @@
+--- ./BotCore.pm~	2005-07-18 21:17:25.000000000 +0300
++++ ./BotCore.pm	2005-07-19 02:26:43.000000000 +0300
+@@ -190,7 +190,7 @@
+ 			print "$handler ";
+ 			# add a pointer to the module
+ 			$handlers{$handler}->{'id'} = $id;
+-			$self->register_msg_handler($handler,%handlers->{$handler});
++			$self->register_msg_handler($handler, $handlers{$handler});
+ 		};
+ 	};
+ 	# we need to store the command names somewhere
