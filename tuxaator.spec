@@ -5,7 +5,7 @@ Name:		tuxaator
 Version:	2.0
 %define	_pre	pre2
 %define	_snap	20050718
-Release:	0.%{_pre}.%{_snap}.21
+Release:	0.%{_pre}.%{_snap}.24
 Epoch:		0
 License:	BSD
 Group:		Applications/Communications
@@ -14,6 +14,7 @@ Source0:	http://glen.alkohol.ee/pld/tuxaator/%{name}-%{_snap}.tar.bz2
 Source1:	%{name}.init
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-basedir.patch
+Patch2:		%{name}-perl.patch
 URL:		http://tuxaator.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(pre):  /usr/bin/getgid
@@ -54,6 +55,7 @@ Skrypt init dla bota IRC-owego tuxaator.
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 find -name CVS -print0 | xargs -0 rm -rf
 
 %install
@@ -65,7 +67,7 @@ cp -a %{name} *.pm Plugins $RPM_BUILD_ROOT%{_appdir}
 cat <<'EOF' > $RPM_BUILD_ROOT%{_bindir}/%{name}
 #!/bin/sh
 cd %{_appdir}
-exec perl %{name} "$@"
+exec ./%{name} "$@"
 EOF
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
@@ -96,7 +98,7 @@ fi
 
 %preun init
 if [ "$1" = "0" ]; then
-	%service %{name} stop
+	%service -q %{name} stop
 	/sbin/chkconfig --del %{name}
 fi
 
@@ -112,7 +114,13 @@ fi
 %dir %attr(750,root,tuxaator) %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,tuxaator) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/*
-%{_appdir}
+%dir %{_appdir}
+%attr(755,root,root) %{_appdir}/tuxaator
+%{_appdir}/Plugins
+%{_appdir}/config
+%{_appdir}/*.pm
+%{_appdir}/*.txt
+%{_appdir}/reasons
 
 %files init
 %defattr(644,root,root,755)
