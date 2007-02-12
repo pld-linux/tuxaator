@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	A lightweight IRC bot/dictionary, easy to set up, easy to localize
-Summary(pl):	Lekki bot/s³ownik IRC, ³atwy do postawienia, ³atwy do zlokalizowania
+Summary(pl.UTF-8):   Lekki bot/sÅ‚ownik IRC, Å‚atwy do postawienia, Å‚atwy do zlokalizowania
 Name:		tuxaator
 Version:	2.0
 %define	_pre	pre2
@@ -30,12 +30,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 A lightweight IRC bot/dictionary, easy to set up, easy to localize.
 
-%description -l pl
-Lekki bot/s³ownik IRC, ³atwy do postawienia, ³atwy do zlokalizowania.
+%description -l pl.UTF-8
+Lekki bot/sÅ‚ownik IRC, Å‚atwy do postawienia, Å‚atwy do zlokalizowania.
 
 %package init
 Summary:	tuxaator initscript
-Summary(pl):	Skrypt init dla tuxaatora
+Summary(pl.UTF-8):   Skrypt init dla tuxaatora
 Group:		Applications/Communications
 PreReq:		rc-scripts >= 0.4.0.17
 PreReq:		%{name} = %{epoch}:%{version}-%{release}
@@ -48,7 +48,7 @@ Provides:	user(tuxaator)
 %description init
 Initscript for tuxaator IRC bot.
 
-%description init -l pl
+%description init -l pl.UTF-8
 Skrypt init dla bota IRC-owego tuxaator.
 
 %prep
