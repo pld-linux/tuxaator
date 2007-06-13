@@ -1,25 +1,25 @@
 %include	/usr/lib/rpm/macros.perl
+%define	_pre	pre2
+%define	_snap	20070614
+%define	_rel	0.1
 Summary:	A lightweight IRC bot/dictionary, easy to set up, easy to localize
 Summary(pl.UTF-8):	Lekki bot/słownik IRC, łatwy do postawienia, łatwy do zlokalizowania
 Name:		tuxaator
 Version:	2.0
-%define	_pre	pre2
-%define	_snap	20050718
-Release:	0.%{_pre}.%{_snap}.24
+Release:	0.%{_pre}.%{_snap}.%{_rel}
 Epoch:		0
 License:	BSD
 Group:		Applications/Communications
-Source0:	http://glen.alkohol.ee/pld/tuxaator/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	3451a4d019dbf364d5983541b9fc8fb5
+Source0:	%{name}-%{_snap}.tar.bz2
+# Source0-md5:	fb1ec38d6ef8528c5a0b5874bec89580
 Source1:	%{name}.init
-Patch0:		%{name}-schema.patch
-Patch1:		%{name}-basedir.patch
-Patch2:		%{name}-perl.patch
+Patch0:		%{name}-basedir.patch
+Patch1:		%{name}-perl.patch
 URL:		http://tuxaator.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.228
-Requires(pre):  /usr/bin/getgid
-Requires(pre):  /usr/sbin/groupadd
 Requires(postun):	/usr/sbin/groupdel
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
 Provides:	group(tuxaator)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -37,12 +37,12 @@ Lekki bot/słownik IRC, łatwy do postawienia, łatwy do zlokalizowania.
 Summary:	tuxaator initscript
 Summary(pl.UTF-8):	Skrypt init dla tuxaatora
 Group:		Applications/Communications
-PreReq:		rc-scripts >= 0.4.0.17
-PreReq:		%{name} = %{epoch}:%{version}-%{release}
 Requires(post,preun):	/sbin/chkconfig
-Requires(pre):  /bin/id
-Requires(pre):  /usr/sbin/useradd
 Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/sbin/useradd
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	rc-scripts >= 0.4.0.17
 Provides:	user(tuxaator)
 
 %description init
@@ -52,10 +52,9 @@ Initscript for tuxaator IRC bot.
 Skrypt init dla bota IRC-owego tuxaator.
 
 %prep
-%setup -q -n %{name}-%{_snap}
+%setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 find -name CVS -print0 | xargs -0 rm -rf
 
 %install
