@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.perl
 %define	_pre	pre2
 %define	_snap	20070614
 %define	_rel	0.1
