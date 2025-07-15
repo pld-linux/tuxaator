@@ -52,8 +52,8 @@ Skrypt init dla bota IRC-owego tuxaator.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 find -name CVS -print0 | xargs -0 rm -rf
 
 %install
